@@ -3,8 +3,17 @@
 import { motion } from 'framer-motion';
 import { Map, Sparkles, Play } from 'lucide-react';
 import Link from 'next/link';
-import ParticleBackground from '../ui/ParticleBackground';
-import MagneticButton from '../ui/MagneticButton';    
+import dynamic from 'next/dynamic';
+import MagneticButton from '../ui/MagneticButton';
+
+// 动态导入粒子背景，禁用服务器端渲染（解决超时问题）
+const ParticleBackground = dynamic(
+  () => import('../ui/ParticleBackground'),
+  { 
+    ssr: false,
+    loading: () => <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white" />
+  }
+);
 
 export default function Hero() {
   return (
@@ -44,26 +53,26 @@ export default function Hero() {
         </motion.p>
 
         <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, delay: 0.6 }}
-  className="flex flex-col sm:flex-row gap-4 justify-center"
->
-  <Link href="/plan">
-    <MagneticButton 
-      className="px-8 py-4 bg-brand-blue text-white rounded-full font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 flex items-center gap-2"
-      strength={0.3}
-    >
-      <Map className="w-5 h-5" />
-      立即规划
-    </MagneticButton>
-  </Link>
-  
-  <button className="px-8 py-4 bg-white text-gray-900 border-2 border-gray-200 rounded-full font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-1 hover:border-brand-blue hover:text-brand-blue hover:shadow-lg active:translate-y-0 active:scale-95 transform">
-    <Play className="w-5 h-5" />
-    观看演示
-  </button>
-</motion.div>
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+        >
+          <Link href="/plan">
+            <MagneticButton 
+              className="px-8 py-4 bg-brand-blue text-white rounded-full font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 flex items-center gap-2"
+              strength={0.3}
+            >
+              <Map className="w-5 h-5" />
+              立即规划
+            </MagneticButton>
+          </Link>
+          
+          <button className="px-8 py-4 bg-white text-gray-900 border-2 border-gray-200 rounded-full font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-1 hover:border-brand-blue hover:text-brand-blue hover:shadow-lg active:translate-y-0 active:scale-95 transform">
+            <Play className="w-5 h-5" />
+            观看演示
+          </button>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
