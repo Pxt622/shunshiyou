@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import { Inter } from 'next/font/google';
+import './globals.css';
 
-export const metadata: Metadata = {
-  title: "顺时游 - 智慧旅游规划",
-  description: "AI驱动的智能旅游规划平台",
-};
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export default function RootLayout({
   children,
@@ -12,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh-CN">
-      <body className="antialiased">
+    <html lang="zh-CN" className={inter.variable}>
+      <body className={`${inter.className} antialiased`}>
         {children}
       </body>
     </html>

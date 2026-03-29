@@ -2,56 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 31, 41, 55;
+/* 阿里妈妈数智体 - 通过 CDN 引入 */
+@font-face {
+  font-family: 'Alimama ShuZhiTi';
+  src: url('//cdn.jsdelivr.net/gh/alibaba-font/alimama-shuzhiti@latest/AlimamaShuZhiTi-Bold.woff2') format('woff2'),
+       url('//cdn.jsdelivr.net/gh/alibaba-font/alimama-shuzhiti@latest/AlimamaShuZhiTi-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: #ffffff;
-  margin: 0;
-  padding: 0;
-}
-
-/* 3D卡片CSS变量支持 */
-.feature-card {
-  --mouse-x: 0.5;
-  --mouse-y: 0.5;
-  transform: perspective(1000px) rotateX(calc((var(--mouse-y) - 0.5) * -10deg)) rotateY(calc((var(--mouse-x) - 0.5) * 10deg)) translateZ(10px);
-  transition: transform 0.1s ease-out;
-}
-
-/* 流光扫描效果 */
-.scanning-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.4), transparent);
-  background-size: 200% 100%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: scan 2s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes scan {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* 减少动画偏好支持 */
-@media (prefers-reduced-motion: reduce) {
-  .feature-card {
-    transform: none !important;
-    transition: none !important;
+/* 备用：如果 CDN 不稳定，使用系统字体 */
+@layer base {
+  html {
+    font-family: 'Alimama ShuZhiTi', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .animate-bounce,
-  .animate-pulse,
-  .animate-spin {
-    animation: none !important;
+  
+  /* 标题专用字体类 */
+  .font-shuzhi {
+    font-family: 'Alimama ShuZhiTi', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-weight: bold;
   }
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 选中文本颜色 */
+::selection {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: #1e40af;
 }

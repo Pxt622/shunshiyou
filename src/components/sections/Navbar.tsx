@@ -9,7 +9,7 @@ const navItems = [
   { name: '功能', href: '#features' },
   { name: '技术', href: '#tech' },
   { name: '故事', href: '#stories' },
-  { name: '校园大使', href: '#campus' },
+  { name: '登录', href: '#campus' },
 ];
 
 export default function Navbar() {
@@ -42,7 +42,8 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-brand-blue rounded-lg flex items-center justify-center">
+            {/* Logo 图标背景也改为蓝色 */}
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Map className="w-5 h-5 text-white" />
             </div>
             <span className={`font-bold text-xl transition-colors ${isScrolled ? 'text-gray-900' : 'text-gray-900'}`}>
@@ -56,15 +57,16 @@ export default function Navbar() {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="text-gray-600 hover:text-brand-blue transition-colors font-medium relative group"
+                className="text-gray-600 hover:text-blue-600 transition-colors font-medium relative group"
               >
                 {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-orange transition-all group-hover:w-full" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
               </button>
             ))}
+            {/* 桌面端立即规划按钮改为蓝色 */}
             <Link
               href="/plan"
-              className="px-6 py-2 bg-brand-blue text-white rounded-full font-medium hover:bg-blue-700 transition-all hover:shadow-lg hover:-translate-y-0.5"
+              className="px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-all hover:shadow-lg hover:-translate-y-0.5"
             >
               立即规划
             </Link>
@@ -99,9 +101,10 @@ export default function Navbar() {
                   {item.name}
                 </button>
               ))}
+              {/* 移动端立即规划按钮改为蓝色 */}
               <Link
                 href="/plan"
-                className="block w-full text-center px-4 py-2 bg-brand-blue text-white rounded-full"
+                className="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
               >
                 立即规划
               </Link>
