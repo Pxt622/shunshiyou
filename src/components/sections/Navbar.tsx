@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Map, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 
+// 1. 修改：删除 navItems 中的 '注册/登录'，因为它不再是滚动的锚点
 const navItems = [
   { name: '功能', href: '#features' },
   { name: '技术', href: '#tech' },
   { name: '故事', href: '#stories' },
-  { name: '登录', href: '#campus' },
 ];
 
 export default function Navbar() {
@@ -25,9 +25,12 @@ export default function Navbar() {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: 'smooth' });
-    setIsMobileMenuOpen(false);
+    // 如果 href 是 # 开头，则执行滚动
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      element?.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
+    }
   };
 
   return (
@@ -42,7 +45,6 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            {/* Logo 图标背景也改为蓝色 */}
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Map className="w-5 h-5 text-white" />
             </div>
@@ -52,7 +54,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <button
                 key={item.name}
@@ -63,12 +65,19 @@ export default function Navbar() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
               </button>
             ))}
-            {/* 桌面端立即规划按钮改为蓝色 */}
+
+            {/* 2. 修改：桌面端把 '注册/登录' 改为 Link 按钮，指向新页面 */}
             <Link
-              href="/plan"
-              className="px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-all hover:shadow-lg hover:-translate-y-0.5"
+              href="/register"
+              className="ml-4 px-5 py-2 text-gray-700 font-medium hover:text-blue-600 border border-gray-300 rounded-lg transition"
             >
-              立即规划
+              登录
+            </Link>
+            <Link
+              href="/register"
+              className="px-5 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
+            >
+              注册
             </Link>
           </nav>
 
@@ -101,13 +110,24 @@ export default function Navbar() {
                   {item.name}
                 </button>
               ))}
-              {/* 移动端立即规划按钮改为蓝色 */}
-              <Link
-                href="/plan"
-                className="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
-              >
-                立即规划
-              </Link>
+              
+              {/* 3. 修改：移动端菜单添加登录和注册按钮 */}
+              <div className="flex flex-col gap-2 pt-2 border-t">
+                <Link
+                  href="/register"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                >
+                  登录
+                </Link>
+                <Link
+                  href="/register"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                >
+                  免费注册
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}
